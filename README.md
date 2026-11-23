@@ -67,20 +67,20 @@ Do not import the old export over an actively edited Docker database. Schema mig
 
 ## Remote deployment on .157
 
-The source code and sample content are deployed in `/home/kingship/ministry-website` on `10.104.20.157`, using the next available application port, **8006**. Existing local accounts, uploaded documents and database exports are excluded from the deployment.
+The source code and sample content are deployed in `/home/kingship/kingship-infrastucture-website` on `10.104.20.157`, using the next available application port, **8006**. Existing local accounts, uploaded documents and database exports are excluded from the deployment.
 
-The remote `.env.docker` contains freshly generated credentials, `APP_PORT=8006`, `DEPLOY_BIND=10.104.20.157`, `SHARED_PROXY_NETWORK=shared-proxy`, `PROXY_ALIAS=ministry-website-web` and `SITE_URL=https://infrastucture.kingship.info`. HTTPS cookies are enabled. PostgreSQL and Redis use the existing shared development services with a dedicated application database and cache prefix. Outgoing notifications are captured by shared Mailpit.
+The remote `.env.docker` contains freshly generated credentials, `APP_PORT=8006`, `DEPLOY_BIND=10.104.20.157`, `SHARED_PROXY_NETWORK=shared-proxy`, `PROXY_ALIAS=ministry-website-web` and `SITE_URL=https://infrastructure.kingship.info`. HTTPS cookies are enabled. PostgreSQL and Redis use the existing shared development services with a dedicated application database and cache prefix. Outgoing notifications are captured by shared Mailpit.
 
 Use both Compose files on this server:
 
 ```sh
-cd /home/kingship/ministry-website
+cd /home/kingship/kingship-infrastucture-website
 docker compose --env-file .env.docker -f compose.yaml -f compose.remote.yaml up -d --build --wait
 docker compose --env-file .env.docker -f compose.yaml -f compose.remote.yaml exec web python manage.py seed_content
 docker compose --env-file .env.docker -f compose.yaml -f compose.remote.yaml ps
 ```
 
-The gateway listens at `http://10.104.20.157:8006/` and `http://127.0.0.1:8006/`. In Pangolin, route the HTTP resource for **infrastucture.kingship.info** through the existing .157 site to **10.104.20.157:8006**, using HTTP upstream. The gateway preserves `X-Forwarded-Proto: https` from the edge. Staff sign-in should use the HTTPS domain because the remote cookies are secure.
+The gateway listens at `http://10.104.20.157:8006/` and `http://127.0.0.1:8006/`. In Pangolin, route the HTTP resource for **infrastructure.kingship.info** through the existing .157 site to **10.104.20.157:8006**, using HTTP upstream. The gateway preserves `X-Forwarded-Proto: https` from the edge. Staff sign-in should use the HTTPS domain because the remote cookies are secure.
 
 Create a fresh staff account on the remote server when needed:
 
