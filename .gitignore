@@ -60,6 +60,8 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
+app/emails/
+app/mediafiles/
 
 # Flask stuff:
 instance/
@@ -123,6 +125,9 @@ celerybeat.pid
 
 # Environments
 .env
+.env.docker
+.docker-state/
+app/staticfiles/
 .venv
 env/
 venv/

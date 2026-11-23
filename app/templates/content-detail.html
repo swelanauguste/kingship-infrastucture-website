@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block head_title %}{{ item.title }}{% endblock %}
+{% block content %}
+<article class="container section article-content">
+  <a class="text-link" href="{% url 'home' %}#{% if item.category == 'project' %}projects{% elif item.category == 'publication' %}publications{% else %}updates{% endif %}">Back to {{ item.get_category_display|lower }} updates</a>
+  <header><p class="eyebrow">{{ item.get_category_display }}</p><h1>{{ item.title }}</h1><time datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|date:'j F Y' }}</time><p class="article-summary">{{ item.summary }}</p></header>
+  <div class="article-body">{{ item.body|linebreaks }}</div>
+  <div class="article-actions">
+    {% if item.document %}<a class="button" href="{{ item.document.url }}">Download document (PDF)</a>{% endif %}
+    {% if item.external_url %}<a class="button outline" href="{{ item.external_url }}">Visit official source</a>{% endif %}
+  </div>
+  <p class="article-subscribe"><a class="text-link" href="{% url 'home' %}#subscribe">Subscribe for ministry updates</a></p>
+</article>
+{% endblock %}

@@ -1,0 +1,4 @@
+{% extends 'staff/base.html' %}
+{% block title %}{% if item %}Edit content{% else %}Create content{% endif %}{% endblock %}
+{% block content %}<div class="staff-page-heading"><div><a class="text-link" href="{% url 'staff_content_list' %}">Back to content</a><h1>{% if item %}Edit content{% else %}Create content{% endif %}</h1><p>Save a draft to preview it, or publish when it is ready.</p></div>{% if item and perms.pages.view_content %}<a class="button outline" href="{% url 'staff_content_preview' item.pk %}">Preview saved page</a>{% endif %}</div>
+<section class="panel editor-panel"><form method="post" enctype="multipart/form-data" class="editor-form">{% csrf_token %}{% include 'staff/fields.html' %}<div class="editor-actions"><button class="button" type="submit">Save content</button><a class="button outline" href="{% url 'staff_content_list' %}">Cancel</a></div></form></section>{% endblock %}

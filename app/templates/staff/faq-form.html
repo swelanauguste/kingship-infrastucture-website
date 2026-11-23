@@ -1,0 +1,3 @@
+{% extends 'staff/base.html' %}
+{% block title %}{% if item %}Edit FAQ{% else %}Add FAQ{% endif %}{% endblock %}
+{% block content %}<div class="staff-page-heading"><div><a class="text-link" href="{% url 'staff_faq_list' %}">Back to FAQs</a><h1>{% if item %}Edit question{% else %}Add a question{% endif %}</h1><p>Write a clear question and a helpful, concise answer.</p></div></div><section class="panel editor-panel"><form method="post" class="editor-form">{% csrf_token %}{% include 'staff/fields.html' %}<div class="editor-actions"><button class="button" type="submit">Save FAQ</button><a class="button outline" href="{% url 'staff_faq_list' %}">Cancel</a></div></form></section>{% endblock %}

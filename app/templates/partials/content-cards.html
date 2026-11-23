@@ -1,0 +1,10 @@
+<div class="updates-grid managed-cards">
+  {% for item in items %}
+  <article class="update-card">
+    <span class="tag teal">{{ item.get_category_display }}</span>
+    <h3><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h3>
+    <p>{{ item.summary }}</p>
+    <div class="update-bottom"><time datetime="{{ item.published_at|date:'c' }}">{{ item.published_at|date:'j F Y' }}</time><a href="{{ item.get_absolute_url }}">Read more</a></div>
+  </article>
+  {% endfor %}
+</div>

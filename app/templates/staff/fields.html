@@ -1,0 +1,8 @@
+{% if form.errors %}<div class="form-error" role="alert">Please correct the fields below.{{ form.non_field_errors }}</div>{% endif %}
+{% for field in form %}
+<div class="editor-field{% if field.field.widget.input_type == 'checkbox' %} editor-checkbox{% endif %}">
+  {% if field.field.widget.input_type == 'checkbox' %}{{ field }}{{ field.label_tag }}{% else %}{{ field.label_tag }}{{ field }}{% endif %}
+  {% if field.help_text %}<p class="field-help" id="{{ field.auto_id }}_helptext">{{ field.help_text }}</p>{% endif %}
+  {{ field.errors }}
+</div>
+{% endfor %}

@@ -10,6 +10,8 @@ SEARCH_SECTIONS = (
     ("News and public notices", "updates", "news notices tenders procurement announcements"),
     ("Publications and policy documents", "publications", "publications policies plans documents resources"),
     ("Contact the ministry", "contact", "contact address union castries help directory"),
+    ("Frequently asked questions", "faq", "faq questions answers help"),
+    ("Subscribe for notifications", "subscribe", "subscribe email notifications updates"),
 )
 
 UPDATES = (
@@ -36,4 +38,4 @@ UPDATES = (
     },
 )
 
-UPDATE_FILTERS = (("all", "All updates"), ("notice", "Notices"), ("publication", "Publications"))
+UPDATE_FILTERS = (("all", "All updates"), ("news", "News"), ("notice", "Notices"), ("publication", "Publications"))

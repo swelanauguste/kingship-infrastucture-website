@@ -1,0 +1,21 @@
+<section class="subscribe-section" id="subscribe" aria-labelledby="subscribe-title">
+  <div class="container section subscribe-layout">
+    <div><p class="eyebrow light">KEEP IN TOUCH</p><h2 id="subscribe-title">The updates that<br>matter to you.</h2><p>Get ministry publications, news, public notices and project updates in your inbox. Choose the topics you’d like to follow.</p><p class="subscription-note">We use your email address to send your selected updates. Confirm your email to subscribe. Every update includes an unsubscribe link.</p></div>
+    <div class="subscribe-panel">
+      {% for message in messages %}<p class="form-message" role="status">{{ message }}</p>{% endfor %}
+      {% if subscription_error %}<p class="form-error" role="alert">{{ subscription_error }}</p>{% endif %}
+      <form method="post" action="{% url 'subscribe' %}#subscribe">
+        {% csrf_token %}
+        {{ subscription_form.website }}
+        {{ subscription_form.non_field_errors }}
+        <label for="{{ subscription_form.email.id_for_label }}">Email address</label>
+        {{ subscription_form.email }}{{ subscription_form.email.errors }}
+        <fieldset><legend>Send me updates about</legend>{{ subscription_form.topics }}{{ subscription_form.topics.errors }}</fieldset>
+        <div class="consent-field">{{ subscription_form.consent }}<label for="{{ subscription_form.consent.id_for_label }}">{{ subscription_form.consent.label }}</label></div>
+        {{ subscription_form.consent.errors }}
+        <button class="button gold" type="submit">Subscribe for notifications</button>
+        <p class="subscription-note">Already subscribed? Submit your email with new topic choices to update your preferences after confirmation.</p>
+      </form>
+    </div>
+  </div>
+</section>

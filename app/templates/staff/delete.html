@@ -1,0 +1,3 @@
+{% extends 'staff/base.html' %}
+{% block title %}Delete item{% endblock %}
+{% block content %}<section class="panel editor-panel"><p class="eyebrow">DELETE ITEM</p><h1>Delete “{{ item }}”?</h1><p>This permanently removes the item from the website. You can cancel and hide or unpublish it instead.</p><form method="post">{% csrf_token %}<div class="editor-actions"><button type="submit" class="button danger-button">Delete permanently</button><a class="button outline" href="{% url cancel_url %}">Cancel</a></div></form></section>{% endblock %}

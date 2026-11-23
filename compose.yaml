@@ -1,0 +1,94 @@
+name: ministry-website
+
+x-app: &app
+  image: ministry-website-app:local
+  pull_policy: never
+  env_file: .env.docker
+  environment:
+    DEBUG: "0"
+    DB_HOST: shared-postgres
+    DB_PORT: "5432"
+    DB_NAME: ${DB_NAME:-ministry_website_dev}
+    DB_USER: ${DB_USER:-ministry_website_dev}
+    DB_PASSWORD: ${DB_PASSWORD:?Run python3 scripts/setup_docker.py first}
+    SECRET_KEY: ${SECRET_KEY:?Run python3 scripts/setup_docker.py first}
+    REDIS_URL: ${REDIS_URL:-redis://shared-redis:6379/12}
+    STATIC_ROOT: /srv/static
+    MEDIA_ROOT: /srv/media
+    EMAIL_FILE_PATH: /srv/emails
+    EMAIL_BACKEND: django.core.mail.backends.smtp.EmailBackend
+    EMAIL_HOST: shared-mailpit
+    EMAIL_PORT: "1025"
+    EMAIL_USE_TLS: "0"
+    EMAIL_HOST_USER: ""
+    EMAIL_HOST_PASSWORD: ""
+    TRUST_PROXY_HEADERS: "1"
+  volumes:
+    - static_data:/srv/static
+    - media_data:/srv/media
+  networks:
+    - default
+    - database
+
+services:
+  init:
+    <<: *app
+    command: ["init"]
+    restart: "no"
+
+  web:
+    <<: *app
+    build: .
+    restart: unless-stopped
+    depends_on:
+      init:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz/', timeout=10)"]
+      interval: 15s
+      timeout: 12s
+      retries: 5
+      start_period: 15s
+
+  notifications:
+    <<: *app
+    command: ["notifications"]
+    restart: unless-stopped
+    depends_on:
+      web:
+        condition: service_healthy
+
+  gateway:
+    image: nginx:1.28-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - static_data:/srv/static:ro
+      - media_data:/srv/media:ro
+    networks:
+      default: {}
+      proxy:
+        aliases: ["${PROXY_ALIAS:-ministry-website-dev}"]
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/healthz/"]
+      interval: 15s
+      timeout: 12s
+      retries: 5
+
+volumes:
+  static_data:
+  media_data:
+
+networks:
+  default: {}
+  database:
+    external: true
+    name: ${SHARED_DATABASE_NETWORK:-shared-dev-database}
+  proxy:
+    external: true
+    name: ${SHARED_PROXY_NETWORK:-shared-dev-proxy}

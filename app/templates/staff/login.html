@@ -1,0 +1,3 @@
+{% extends 'staff/base.html' %}
+{% block title %}Staff sign in{% endblock %}
+{% block content %}<section class="staff-login panel"><p class="eyebrow">MINISTRY STAFF</p><h1>Welcome back.</h1><p>Sign in to manage publications, news, notices, projects and FAQs.</p><form method="post" class="editor-form">{% csrf_token %}{% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}{% include 'staff/fields.html' %}<button type="submit" class="button">Sign in</button></form><p class="staff-muted">Need access? Contact your website administrator.</p></section>{% endblock %}

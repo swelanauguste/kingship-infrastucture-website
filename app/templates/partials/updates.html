@@ -20,6 +20,6 @@
           <a href="{{ update.url }}" aria-label="Read {{ update.title }}"><svg aria-hidden="true" class="icon"><use href="#arrow"/></svg></a>
         </div>
       </article>
-    {% endfor %}
+    {% empty %}<p>No updates in this category yet. Please check back soon.</p>{% endfor %}
   </div>
 </div>

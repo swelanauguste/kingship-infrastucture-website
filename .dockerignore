@@ -1,0 +1,15 @@
+.git
+.venv
+.env
+.env.*
+**/.env
+**/.env.*
+.docker-state
+**/__pycache__
+**/*.pyc
+**/*.sqlite3*
+app/mediafiles
+app/staticfiles
+app/emails
+dist
+.DS_Store

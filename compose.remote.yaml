@@ -1,0 +1,5 @@
+# Add to compose.yaml on the .157 host. Loopback binding is retained from the base file.
+services:
+  gateway:
+    ports:
+      - "${DEPLOY_BIND:?Set DEPLOY_BIND in .env.docker}:${APP_PORT:?Set APP_PORT in .env.docker}:80"

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block head_title %}Email notifications{% endblock %}
+{% block content %}
+<section class="container section article-content subscription-action">
+  <p class="eyebrow">EMAIL NOTIFICATIONS</p>
+  {% if invalid %}
+    <h1>This link is no longer valid.</h1><p>Confirmation links expire after 48 hours. You can request a new link using the subscription form.</p>
+  {% elif confirmed %}
+    <h1>You’re subscribed.</h1><p>Your topic choices have been saved. You’ll receive new ministry updates for your selected topics. You can unsubscribe using the link in any update.</p>
+  {% elif unsubscribed %}
+    <h1>You’re unsubscribed.</h1><p>You will no longer receive ministry email notifications.</p>
+  {% elif action == 'confirm' %}
+    <h1>Confirm your email updates.</h1><p>Subscribe or update the topic choices for {{ subscriber.email }}.</p>
+    <form method="post">{% csrf_token %}<button class="button" type="submit">Confirm subscription</button></form>
+  {% else %}
+    <h1>Unsubscribe from email updates?</h1><p>Stop ministry notifications to {{ subscriber.email }}.</p>
+    <form method="post">{% csrf_token %}<button class="button" type="submit">Unsubscribe</button></form>
+  {% endif %}
+  <a class="text-link" href="{% url 'home' %}#subscribe">Return to the ministry website</a>
+</section>
+{% endblock %}
