@@ -6,7 +6,7 @@ from django.templatetags.static import static as static_url
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path("favicon.ico", RedirectView.as_view(url=static_url("images/saint-lucia-crest.png"), permanent=True)),
+    path("favicon.ico", RedirectView.as_view(url=static_url("images/ministry-favicon.ico"), permanent=False)),
     path("admin/", admin.site.urls),
     path("staff/", include("pages.staff_urls")),
     path("", include("pages.urls")),
