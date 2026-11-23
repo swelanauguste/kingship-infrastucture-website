@@ -1,7 +1,7 @@
 """Curated homepage content, shared by full-page and HTMX responses."""
 
 SEARCH_SECTIONS = (
-    ("About the ministry", "about", "about infrastructure ministry communities"),
+    ("About the ministry", "about", "about infrastructure ministry communities mission vision purpose"),
     ("Roads, infrastructure and public works", "our-work", "road infrastructure works technical"),
     ("Ports and connectivity", "our-work", "port sea ship airport slaspa"),
     ("Driver and vehicle services", "services", "transport driving licence license permit vehicle"),
